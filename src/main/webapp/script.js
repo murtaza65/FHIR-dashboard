@@ -4,7 +4,7 @@ function generateChart() {
     var yAxisValue = $("#yAxis").val();
 
     $.ajax({
-    url: "http://localhost:8080/get_chart_data",
+    url: window.location.href,
     method: "GET",
     data: {
         ChartType : chartType,

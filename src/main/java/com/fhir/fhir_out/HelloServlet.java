@@ -16,7 +16,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        String directoryPath = "FHIR_Data/fhir"; // Replace with the actual path to your directory
+        String directoryPath = "/workspaces/FHIR-dashboard/FHIR_Data/fhir"; // Replace with the actual path to your directory
         int numberOfFilesToProcess = 50;
 
         processJsonFiles(directoryPath, numberOfFilesToProcess);
