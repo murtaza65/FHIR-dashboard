@@ -1,4 +1,4 @@
-package com.webapp.fhir2;
+package com.fhir.fhir_out;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +15,8 @@ public class patient {
     String country;
     String state;
     String gender;
-    private List<Immunization> immunization = new ArrayList<>();
+    public List<Immunization> immunization = new ArrayList<>();
+    public List<Practioner> practioners = new ArrayList<>();
 
     public patient(String patient_id, String first_name, String sur_name, String country, String state, String gender) {
         this.patient_id = patient_id;
@@ -71,6 +72,13 @@ public class patient {
     {
        immunization.add(new Immunization(immunzationDetail.get("id").toString(),((HashMap)((ArrayList)((HashMap)immunzationDetail.get("vaccineCode")).get("coding")).get(0)).get("code").toString(),((HashMap)immunzationDetail.get("vaccineCode")).get("text").toString()));
     }
+
+    public void addPractioner(HashMap practionerDetail)
+    {
+        practioners.add(new Practioner(practionerDetail.get("id").toString(),((ArrayList)((HashMap)((ArrayList) practionerDetail.get("name")).get(0)).get("given")).get(0).toString()));
+    }
+
+
 
 
 }

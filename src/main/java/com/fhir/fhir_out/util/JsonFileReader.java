@@ -1,4 +1,4 @@
-package com.webapp.fhir2.util;
+package com.fhir.fhir_out.util;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;

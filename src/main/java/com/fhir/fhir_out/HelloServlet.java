@@ -1,25 +1,48 @@
 package com.fhir.fhir_out;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
+
+import static com.fhir.fhir_out.util.JSONBuilder.*;
+import static com.fhir.fhir_out.util.JsonFileReader.processJsonFiles;
+
+@WebServlet(name = "helloServlet", value = "/get_chart_data")
 public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
+        String directoryPath = "FHIR_Data/fhir"; // Replace with the actual path to your directory
+        int numberOfFilesToProcess = 50;
+
+        processJsonFiles(directoryPath, numberOfFilesToProcess);
         message = "Hello World!";
+        //System.out.println(resourceIdentifier.patientVsId);
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+        response.setContentType("application/json");
 
-        // Hello
+        JSONArray outputString = new JSONArray();
+        switch (request.getParameter("ChartType"))
+        {
+            case "bar_chart":  outputString = generateDrugVsIntakeCount();
+                                break;
+            case "pie_chart": outputString = fetchGenderProfile();
+                                break;
+            case "dough_chart": outputString = fetchDoctorVsCountDetails();
+                                break;
+            case "scatter_chart": outputString = generateYearVsEncounterCount();
+                                break;
+        }
+
         PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+        ((JSONArray) outputString).write(out);
+        out.close();
     }
 
     public void destroy() {

@@ -1,4 +1,4 @@
-package com.fhir.fhir_out.util;
+package com.fhir.fhir_out;
 
 public class Practioner {
     String id;

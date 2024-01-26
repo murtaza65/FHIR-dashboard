@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pie Chart - VaccineCode Distribution</title>
+  <title>Pie Chart - Doctor Popularity Distribution</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <!-- D3.js -->
@@ -43,14 +43,21 @@
 <body>
 
 <div class="container">
-  <h1>Pie Chart - VaccineCode Distribution</h1>
+  <h1>Doughnut Chart - Doctor Popularity Distribution</h1>
+  <div class="alert alert-primary" role="alert">
+    The doughnut chart displays the details of most popular doctors from the given dataset.
+    The pie area represents the total count of patients who have visited the doctor. The annotations of
+    each part is the doctor name.
+  </div>
   <div id="my_dataviz"></div>
 </div>
 
 <script>
+
+  var jsonDataString = decodeURIComponent(window.location.search.substring(1).split("=")[1]);
   // set the dimensions and margins of the graph
-  var width = 450
-  height = 450
+  var width = 1000
+  height = 700
   margin = 40
 
   // The radius of the pie plot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -64,12 +71,12 @@
           .append("g")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  // Create dummy data
-  var data = { a: 9, b: 20, c: 30, d: 8, e: 12, f: 3, g: 7, h: 14 }
+  var data1 = JSON.parse(jsonDataString)
+  var data = data1[0]
 
   // set the color scale
   var color = d3.scaleOrdinal()
-          .domain(["a", "b", "c", "d", "e", "f", "g", "h"])
+          .domain(data)
           .range(d3.schemeDark2);
 
   // Compute the position of each group on the pie
